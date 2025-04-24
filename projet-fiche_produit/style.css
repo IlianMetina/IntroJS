@@ -1,0 +1,128 @@
+body{
+
+    background-color: aquamarine;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+.fiche{
+
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 10px 10px;
+    border-radius: 5px;
+    width: 80%;
+    
+    
+}
+
+.main_image{
+
+    
+    border-radius: 5px;
+    border: 1px solid rgb(219, 191, 191);
+    width: 250px;
+    height: 300px;
+    
+}
+
+.add_product{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    
+}
+
+.bouton{
+
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.bouton i{
+
+    margin-right: 20px;
+}
+
+.pop-up{
+    
+    opacity: 0;
+    display: flex;
+    width: 300px;
+    height: 75px;
+    align-items: center;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 1px solid white;
+    color: white;
+    background-color: rgba(255, 0, 0, 0.8);
+    transform: scale(0.93); /* La popup commence légèrement réduite */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    
+}
+
+.pop-up.active{
+
+    right: 5%;
+    top: 5%;
+    transform: scale(1);
+    opacity: 1;
+}
+
+.pop-up i{
+
+    margin-right: 20px;
+    margin-left: 20px;
+
+}
+
+.vignettes{
+
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+
+}
+
+.photo_produit{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.vignettes img{
+
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: transform 0.2s ease;
+    border: 1px solid rgb(219, 191, 191);
+}
+
+.vignettes img:hover{
+
+    transform: scale(1.1);
+}

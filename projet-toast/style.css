@@ -1,0 +1,43 @@
+body{
+
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background:linear-gradient(#A2A2E0, #B39DA2);
+}
+
+.container{
+
+    display: grid;
+
+    gap: 20px;
+    padding: 20px 20px;
+    box-shadow: 1px 1px 1px 1px;
+    
+}
+
+.container button{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    font-weight: bold;
+}
+
+.toast{
+
+    display: none;
+    flex-direction: column;
+    top: 25%;
+    right: 44%;
+    text-align: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    
+}
+

@@ -1,0 +1,46 @@
+footer{
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 1000;
+}
+
+.cookies_banner{
+
+    display: flex;
+    background-color: rgb(187, 153, 153);
+    flex-direction: column;
+    padding-top: 4em;
+    align-items: center;
+}
+
+.cookies_banner p{
+
+    font-weight: bold;
+}
+
+.isAgree{
+
+    display: flex;
+    padding-bottom: 50px;
+    gap: 50px;
+    padding-left: 0px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.bouton{
+
+    width: 200px;
+    height: 40px;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.cookies_banner.hide {
+    display: none;
+}
+  

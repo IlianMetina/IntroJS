@@ -1,0 +1,73 @@
+body {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+}
+
+.like{
+
+    display: flex;
+    flex-direction: column;
+}
+
+.subAndLike{
+
+    padding-top: 40px;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    gap: 300px;
+}
+
+i {
+    transition: transform 0.3s ease-in-out; 
+    margin: 0;
+    padding: 0;
+}
+
+i:hover{
+
+    transform: scale(1.05);
+    transition: transform 0.2s ease; 
+}
+
+.abonnement{
+
+    transition: transform 0.3s ease-in-out; 
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    align-items: center;
+    cursor: pointer;
+}
+
+.abonnement:hover{
+
+    transform: scale(1.05);
+    transition: transform 0.2s ease; 
+}
+
+.isAbonner{
+
+    transition: transform 0.3s ease-in-out; 
+    background-color: white;
+    border: none;
+    color: red;
+    padding: 10px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    align-items: center;
+    cursor: pointer;
+}
+
+.abonnement, .isAbonner {
+
+    width: 140px;
+    text-align: center;
+}
+
