@@ -10,22 +10,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <div class="addingTask">
-        <input type="text" placeholder="TITRE" class="title-task">
-        <input type="text" placeholder="Texte..." class="text-task">
-        
-        <div class="ajout">
-            <h2>AJOUTER</h2>
-            <i class="material-icons" style="font-size:65px;color:white" >add_circle</i>
+    <main>
+        <div class="tasks-container">
+            <form action="" class="formulaire">
+                <input type="text" class="title" placeholder="TITRE">
+                <textarea class="message" placeholder="TEXTE"></textarea>
+                
+                <button class="add-new-task">
+                    <p>AJOUTER</p>
+                    <i class="material-icons" style="font-size:80px;color:white">add_box</i>
+                </button>
+                
+            </form>
         </div>
+        
+        <!-- Comment faire en sorte que la div s'append bien en premier juste après la div "navigation" -->
+        <div class="navigation">
+            <i class="material-icons" style="font-size:80px;color:white">add_box</i>
+        </div>
+        
+    </main>
+
+    <div>
+        <template id="task">
+            <div class="task">
+                <p></p>
+                <div>
+                    <i class='fas fa-check-square' style='font-size:36px'></i>
+                    <i class="fa fa-window-close" style="font-size:36px"></i>
+                </div>
+            </div>
+        </template>
+
+    
     </div>
-
-    <div class="default-page">
-
-        <i class="material-icons" style="font-size:65px;color:white" >add_circle</i>
-    </div>
-
     <script src="main.js"></script>
 </body>
 </html>
