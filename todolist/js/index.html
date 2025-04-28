@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <main>
+
+        <div class="tasks-container"></div>
+        
+        <form action="" class="formulaire">
+            <input name="title" type="text" class="title" placeholder="TITRE">
+            <textarea  name="description" class="message" placeholder="TEXTE"></textarea>
+            
+            <button class="add-new-task">
+                <p>AJOUTER</p>
+                <i class="material-icons" style="font-size:80px;color:white">add_box</i>
+            </button>
+            
+        </form>
+
+        
+        <!-- Comment faire en sorte que la div s'append bien en premier juste après la div "navigation" -->
+        <div class="navigation">
+            <i class="material-icons" style="font-size:80px;color:white">add_box</i>
+        </div>
+        
+    </main>
+
+    <div>
+        <template id="task">
+            <div>
+                <p></p>
+                <div>
+                    <i class='fas fa-check-square' style='font-size:45px; color: white;'></i>
+                    <i class="delete fa fa-window-close" style='font-size:45px; color: #EA9F9F;'></i>
+                </div>
+            </div>
+        </template>
+
+    
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
