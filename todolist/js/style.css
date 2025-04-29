@@ -159,3 +159,13 @@ main{
     width: 60px;
     overflow: hidden;
 }
+
+.fa-window-close:hover{
+
+    color: rgb(255, 0, 0) !important;
+}
+
+.fa-check-square:hover{
+
+    color:rgb(2, 163, 2) !important;
+}

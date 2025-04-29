@@ -7,19 +7,37 @@ const descriptionInput = document.querySelector(".message");
 const tasksContainer = document.querySelector(".tasks-container");
 const doneTasksIcon = document.querySelectorAll(".task");
 
-//window.onload = displayTasks();
+function clearAllTasks(){
+
+    tasksContainer.innerHTML = "";
+    
+}
+
+function deleteTask(){
+
+    const deleteTaskIndex = displayTasks();
+    console.log(deleteTaskIndex);
 
 
-function getTasks() {
+}
+
+/* Enregistrement de la nouvelle tâche dans le tableau de tâches ainsi que dans le localStorage */
+function saveTasks(tasks, object){
+
+    tasks.push(object);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+}
+
+function getTasks(){
     
     const tasksArray = JSON.parse(localStorage.getItem('tasks') ?? '[]');
-    console.log(tasksArray);
     
     return tasksArray;
 }
 
-function createNewTask() {
-    
+/* Fonctionnel */
+function createNewTask(){
     
     newTaskButton.addEventListener("click", () => {
         
@@ -31,64 +49,96 @@ function createNewTask() {
     
 }
 
+function updateTasksStatus(){
+
+
+
+}
+
 /* Récupération du patron de la balise template, et assignation des valeurs correspondantes */
 function addNewTask(){
     
     const arrayTasks = getTasks();
-    
-    formulaire.addEventListener("submit", ()=>{
+
+    formulaire.addEventListener("submit", (event)=>{
+
+        event.preventDefault();
 
         const template = document.querySelector("template");
         
         const newBalise = template.content.cloneNode(true);
         newBalise.querySelector("p").textContent = titleInput.value;
         newBalise.querySelector("div").classList.add("task");
-        console.log(newBalise);
         
+        /* Repasser en mode classique après l'ajout d'une tâche */
         newTask.classList.remove("passive");
         formulaire.classList.remove("active");
         tasksContainer.classList.remove("passive");
 
-        arrayTasks.push(newBalise);
         localStorage.setItem("tasks", JSON.stringify(arrayTasks));
+
+        const newTaskStruct = {
+
+            title: titleInput.value,
+            description: descriptionInput.value,
+            status: false,
+            
+        };
+        
+        clearAllTasks();
+        saveTasks(arrayTasks, newTaskStruct);
+        displayTasks();
     });
 
 }
 
-function displayTasks() {
+function displayTasks(){
 
     const tasksArray = getTasks();
+    console.log(tasksArray);
+
+    const template = document.querySelector("template");
+        
     tasksArray.forEach(task =>{
+        
+        const newBalise = template.content.cloneNode(true);
+        console.log(newBalise);
 
-        tasksContainer.appendChild(task);
+        newBalise.querySelector("p").textContent = task.title;
+        console.log(newBalise);
+        newBalise.querySelector("div").classList.add("task");
+        console.log(newBalise);
 
+        
+        const deleteIcon = newBalise.querySelector(".delete");
+        console.log(deleteIcon);
+        const parentDeleteIcon = deleteIcon.parentElement;
+        const checkedIcon = newBalise.querySelector(".checked");
+        console.log(checkedIcon);
+
+        deleteIcon.addEventListener("click", ()=>{
+
+            console.log("delete");
+            parentDeleteIcon.parentElement.remove();  
+
+        });
+
+        checkedIcon.addEventListener("click", ()=>{
+
+            newBalise.status = true;
+            console.log("checked");
+            
+
+        });
+
+        tasksContainer.appendChild(newBalise);
+        
     });
-
 }
+
 
 createNewTask();
 addNewTask();
 displayTasks();
 
-formulaire.addEventListener("submit", (event) => {
 
-    event.preventDefault();
-   
-});
-
-/*
-
-Pour update la couleur des icônes lorsqu'il coche la tâche pour dire qu'elle est terminée,
-ou clique sur la croix pour supprimer la tâche, il faut donc la supprimer du localstorage
-
-doneTasksIcon.forEach(task, ()=>{
-
-    task.addEventListener("click", ()=>{
-
-
-
-    });
-
-});
-
-*/ 
