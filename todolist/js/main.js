@@ -10,7 +10,6 @@ const doneTasksIcon = document.querySelectorAll(".task");
 function clearAllTasks(){
 
     tasksContainer.innerHTML = "";
-    
 }
 
 function deleteTask(){
@@ -29,7 +28,6 @@ function saveTasks(tasks, object){
 function getTasks(){
     
     const tasksArray = JSON.parse(localStorage.getItem('tasks') ?? '[]');
-    
     return tasksArray;
 }
 
@@ -41,9 +39,7 @@ function createNewTask(){
         newTask.classList.add("passive");
         formulaire.classList.add("active");
         tasksContainer.classList.add("passive");
-        
     });
-    
 }
 
 /* Fonction de vérification du "check" des tâches */
@@ -55,11 +51,8 @@ function updateTasksStatus(){
         if(task.status == true){
 
             // Mettre bouton check correspondant en VERT!
-
         }
-
     });
-
 }
 
 /* Récupération du patron de la balise template, et assignation des valeurs correspondantes */
@@ -86,6 +79,7 @@ function addNewTask(){
 
         localStorage.setItem("tasks", JSON.stringify(arrayTasks));
 
+        /* Ajout d'un ID dans l'objet newTaskStruct pour identifier la div à supprimer lors de l'évènement click de l'icône supprimer */
         const newTaskStruct = {
 
             title: titleInput.value,
@@ -99,8 +93,8 @@ function addNewTask(){
         clearAllTasks();
         saveTasks(arrayTasks, newTaskStruct);
         displayTasks();
+
     });
-    
 }
 
 function displayTasks(){
@@ -117,6 +111,7 @@ function displayTasks(){
 
         newBalise.querySelector("p").textContent = task.title;
         console.log(newBalise);
+
         newBalise.querySelector("div").classList.add("task");
         console.log(newBalise);
         
@@ -125,6 +120,7 @@ function displayTasks(){
         const deleteIcon = newBalise.querySelector(".delete");
         console.log(deleteIcon);
         const parentDeleteIcon = deleteIcon.parentElement;
+
         const checkedIcon = newBalise.querySelector(".checked");
         console.log(checkedIcon);
         
@@ -133,14 +129,29 @@ function displayTasks(){
             console.log("delete");
             parentDeleteIcon.parentElement.remove();
             
+            /* Vérifier cette partie jusqu'à la fin de la fonction */
+            /* Récupérer tableau localstorage, faire une boucle for dessus, puis lorsque tab.id == task.id, noté l'index et l'utiliser pour splice l'élément correspondant dans le tableau, puis stringify le tableau et setItem dans local storage */
+            
+            const allTasks = getTasks();
+
+            allTasks.forEach((task, index) => {
+                
+                if(allTasks.ID == task.id){
+
+                    allTasks.splice(index, 1);
+                }
+
+            });
+
+            localStorage.setItem("tasks", JSON.stringify(allTasks));
+            
+            console.log(task);
         });
         
         checkedIcon.addEventListener("click", ()=>{
             
             newBalise.status = true;
-            console.log("checked");
-            
-            
+            console.log("checked");            
         });
         
         updateTasksStatus();
