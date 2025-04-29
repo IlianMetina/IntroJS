@@ -17,8 +17,6 @@ function deleteTask(){
 
     const deleteTaskIndex = displayTasks();
     console.log(deleteTaskIndex);
-
-
 }
 
 /* Enregistrement de la nouvelle tâche dans le tableau de tâches ainsi que dans le localStorage */
@@ -26,7 +24,6 @@ function saveTasks(tasks, object){
 
     tasks.push(object);
     localStorage.setItem("tasks", JSON.stringify(tasks));
-
 }
 
 function getTasks(){
@@ -49,14 +46,26 @@ function createNewTask(){
     
 }
 
+/* Fonction de vérification du "check" des tâches */
 function updateTasksStatus(){
 
+    const arrayTasks = JSON.parse(localStorage.getItem("tasks") ?? '[]');
+    arrayTasks.forEach(task => {
+        
+        if(task.status == true){
 
+            // Mettre bouton check correspondant en VERT!
+
+        }
+
+    });
 
 }
 
 /* Récupération du patron de la balise template, et assignation des valeurs correspondantes */
 function addNewTask(){
+
+    let tasksID = 0;
     
     const arrayTasks = getTasks();
 
@@ -82,23 +91,25 @@ function addNewTask(){
             title: titleInput.value,
             description: descriptionInput.value,
             status: false,
-            
+            ID: tasksID + 1
         };
-        
+
+        tasksID++;
+       
         clearAllTasks();
         saveTasks(arrayTasks, newTaskStruct);
         displayTasks();
     });
-
+    
 }
 
 function displayTasks(){
-
+    
     const tasksArray = getTasks();
     console.log(tasksArray);
-
+    
     const template = document.querySelector("template");
-        
+    
     tasksArray.forEach(task =>{
         
         const newBalise = template.content.cloneNode(true);
@@ -108,34 +119,36 @@ function displayTasks(){
         console.log(newBalise);
         newBalise.querySelector("div").classList.add("task");
         console.log(newBalise);
-
+        
+        console.log(task.ID + "LE TEST");
         
         const deleteIcon = newBalise.querySelector(".delete");
         console.log(deleteIcon);
         const parentDeleteIcon = deleteIcon.parentElement;
         const checkedIcon = newBalise.querySelector(".checked");
         console.log(checkedIcon);
-
+        
         deleteIcon.addEventListener("click", ()=>{
-
+            
             console.log("delete");
-            parentDeleteIcon.parentElement.remove();  
-
+            parentDeleteIcon.parentElement.remove();
+            
         });
-
+        
         checkedIcon.addEventListener("click", ()=>{
-
+            
             newBalise.status = true;
             console.log("checked");
             
-
+            
         });
+        
+        updateTasksStatus();
 
         tasksContainer.appendChild(newBalise);
         
     });
 }
-
 
 createNewTask();
 addNewTask();
