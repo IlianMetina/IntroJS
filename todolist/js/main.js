@@ -12,10 +12,18 @@ function clearAllTasks(){
     tasksContainer.innerHTML = "";
 }
 
+function getNextTaskID() {
+
+    const currentID = Number(localStorage.getItem("taskIDCounter") ?? "0");
+    localStorage.setItem("taskIDCounter", String(currentID + 1));
+    return currentID;
+}
+
+
 function deleteTask(){
 
     const deleteTaskIndex = displayTasks();
-    console.log(deleteTaskIndex);
+    console.log("Index du tableau contenant la tâche à supprimer : " + deleteTaskIndex);
 }
 
 /* Enregistrement de la nouvelle tâche dans le tableau de tâches ainsi que dans le localStorage */
@@ -50,6 +58,15 @@ function updateTasksStatus(){
         
         if(task.status == true){
 
+            const iconElement = task.getAttribute("checked");
+            if(iconElement.style.color === "green"){
+
+                iconElement.style.color = "red";
+                
+            }else{
+
+                iconElement.style.color = "green";
+            }
             // Mettre bouton check correspondant en VERT!
         }
     });
@@ -60,10 +77,10 @@ function addNewTask(){
 
     let tasksID = 0;
     
-    const arrayTasks = getTasks();
-
+    
     formulaire.addEventListener("submit", (event)=>{
-
+        
+        const arrayTasks = getTasks();
         event.preventDefault();
 
         const template = document.querySelector("template");
@@ -77,7 +94,8 @@ function addNewTask(){
         formulaire.classList.remove("active");
         tasksContainer.classList.remove("passive");
 
-        localStorage.setItem("tasks", JSON.stringify(arrayTasks));
+        /* Ajout et actualisation des tâches dans le local storage */
+        //localStorage.setItem("tasks", JSON.stringify(arrayTasks));
 
         /* Ajout d'un ID dans l'objet newTaskStruct pour identifier la div à supprimer lors de l'évènement click de l'icône supprimer */
         const newTaskStruct = {
@@ -85,10 +103,8 @@ function addNewTask(){
             title: titleInput.value,
             description: descriptionInput.value,
             status: false,
-            ID: tasksID + 1
+            ID: getNextTaskID()
         };
-
-        tasksID++;
        
         clearAllTasks();
         saveTasks(arrayTasks, newTaskStruct);
@@ -100,6 +116,7 @@ function addNewTask(){
 function displayTasks(){
     
     const tasksArray = getTasks();
+    console.log("Tableau de tâches début de fonction :");
     console.log(tasksArray);
     
     const template = document.querySelector("template");
@@ -107,54 +124,79 @@ function displayTasks(){
     tasksArray.forEach(task =>{
         
         const newBalise = template.content.cloneNode(true);
-        console.log(newBalise);
 
         newBalise.querySelector("p").textContent = task.title;
-        console.log(newBalise);
 
-        newBalise.querySelector("div").classList.add("task");
-        console.log(newBalise);
+        const taskElement = newBalise.querySelector("div");
+
+        taskElement.classList.add("task");
+
+        taskElement.setAttribute("data-id", task.ID);
+
         
-        console.log(task.ID + "LE TEST");
+        //console.log(task.ID + "LE TEST");
         
         const deleteIcon = newBalise.querySelector(".delete");
-        console.log(deleteIcon);
+
         const parentDeleteIcon = deleteIcon.parentElement;
 
         const checkedIcon = newBalise.querySelector(".checked");
-        console.log(checkedIcon);
+
+        console.log("Tableau de tâches début boucle forEach");
+        console.log(tasksArray);
+
         
         deleteIcon.addEventListener("click", ()=>{
             
             console.log("delete");
-            parentDeleteIcon.parentElement.remove();
+
+
+            
+            console.log("Tableau de tâches addEventListen click deleteIcon:");
+            console.log(tasksArray);
+            
             
             /* Vérifier cette partie jusqu'à la fin de la fonction */
             /* Récupérer tableau localstorage, faire une boucle for dessus, puis lorsque tab.id == task.id, noté l'index et l'utiliser pour splice l'élément correspondant dans le tableau, puis stringify le tableau et setItem dans local storage */
             
-            const allTasks = getTasks();
-
-            allTasks.forEach((task, index) => {
-                
-                if(allTasks.ID == task.id){
-
-                    allTasks.splice(index, 1);
-                }
-
-            });
-
-            localStorage.setItem("tasks", JSON.stringify(allTasks));
+            const deleteID = Number(taskElement.getAttribute("data-id"));
+            console.log("ID de la div supprimée : " + deleteID);       
             
-            console.log(task);
+            const taskIndex = tasksArray.findIndex(task => task.ID == deleteID);
+            
+            if(taskIndex != -1){
+                
+                tasksArray.splice(taskIndex, 1);
+                localStorage.setItem("tasks", JSON.stringify(tasksArray));
+                parentDeleteIcon.parentElement.remove();           
+            }
         });
-        
+
+        const AllTasks = getTasks();
+        console.log("Tableau de tâches rechargée :");
+        console.log(AllTasks);
+        console.log("Tableau de tâches sortie de la boucle forEach");
+        console.log(tasksArray);
+
+
         checkedIcon.addEventListener("click", ()=>{
             
+                   
             newBalise.status = true;
-            console.log("checked");            
+
+            updateTasksStatus(checkedIcon);
+
+            // if(checkedIcon.style.color === "green"){
+                
+            //     checkedIcon.style.color = "white";
+                
+            // }else{
+
+            //     checkedIcon.style.color = "green";
+            // }
         });
         
-        updateTasksStatus();
+        // updateTasksStatus();
 
         tasksContainer.appendChild(newBalise);
         
