@@ -1,22 +1,42 @@
+html, body{
+
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: h;
+}
+
 body{
 
     margin: 0;
     padding: 0;
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
     background-color: #F9E1BD;
+    display: grid;
+    grid-template-rows: 1fr 8fr 1fr;
+
+
+}
+
+header{
+
+    height: 10%;
+    width: auto;
+    
 }
 
 
 main{
 
-    display: grid;
-    grid-template-rows: 9fr 1fr;
     height: 100%;
     width: 100%;
-    
+}
 
+button{
 
+    margin: 0;
+    padding: 0;
 }
 
 .page-container{
@@ -24,6 +44,19 @@ main{
     width: 80%;
     height: 100%;
     justify-self: center;
+    
+}
+
+.date-filter{
+
+    margin-top: 5px;
+    margin-left: 5px;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    
     
 }
 
@@ -35,7 +68,6 @@ main{
     transform: translateX(100%);
     opacity: 0;
     transition: transform 0.5s ease, opacity 0.5s ease, visibility 0s 0.5s;
-    position: relative; /* ou absolute/fixed selon ton layout */
     z-index: 10;
     flex-direction: column;
     gap: 60px;
@@ -48,6 +80,31 @@ main{
     
 }
 
+.search-form{
+
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar{
+
+    margin-top: 10px;
+    width: 70%;
+    padding: 5px 8px;
+    text-align: center;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar.passive{
+
+
+    visibility: hidden;
+}
 
 .formulaire.active{
 
@@ -104,7 +161,12 @@ main{
 
 .navigation{
 
+    display: flex;
+    flex-direction: column;
+    
     justify-self: center;
+    align-items: center;
+    
 
 }
 
@@ -121,8 +183,9 @@ main{
 .task{
 
     display: flex;
-    margin-top: 10px;
+    margin-top: 25px;
     gap: 40px;
+    margin-bottom: 10px;
     justify-content: center;
     align-content: center;
     border-radius: 15px;
@@ -137,8 +200,10 @@ main{
 
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
     align-items: center;
+    overflow-y: auto;
+    max-height: 80vh;
 
 }
 

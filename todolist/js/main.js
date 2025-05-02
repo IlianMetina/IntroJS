@@ -7,13 +7,49 @@ const descriptionInput = document.querySelector(".message");
 const tasksContainer = document.querySelector(".tasks-container");
 const doneTasksIcon = document.querySelectorAll(".task");
 
-function clearAllTasks(){
+/* Faire le tri variables gobales -> locales */
 
+function clearAllTasks(){
+    
     tasksContainer.innerHTML = "";
 }
 
-function getNextTaskID() {
+function filterTasks(){
 
+    const filterButton = document.querySelector(".date-filter");
+    filterButton.addEventListener("click", ()=>{
+
+        const buttonContent = filterButton.textContent;
+        const tasksToSort = getTasks();
+        
+        if(buttonContent === "Plus récent"){
+
+            tasksToSort.sort((a, b) =>{
+                filterButton.textContent = "Plus ancien";
+                return b.ID - a.ID;
+            });
+
+        }else{
+
+            tasksToSort.sort((a, b) =>{
+                filterButton.textContent = "Plus récent";
+                return a.ID - b.ID;
+            });
+        }
+
+        localStorage.setItem("tasks", JSON.stringify(tasksToSort));
+        clearAllTasks();
+        displayTasks();
+    });
+}
+
+function modifyTask(){
+
+    // A faire ? Pour donner la possibilité de modifier titre/description d'une tâche
+}
+
+function getNextTaskID() {
+    
     const currentID = Number(localStorage.getItem("taskIDCounter") ?? "0");
     localStorage.setItem("taskIDCounter", String(currentID + 1));
     return currentID;
@@ -21,16 +57,35 @@ function getNextTaskID() {
 
 
 function deleteTask(){
-
+    
     const deleteTaskIndex = displayTasks();
     console.log("Index du tableau contenant la tâche à supprimer : " + deleteTaskIndex);
 }
 
 /* Enregistrement de la nouvelle tâche dans le tableau de tâches ainsi que dans le localStorage */
 function saveTasks(tasks, object){
-
+    
     tasks.push(object);
     localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function searchList(searchInput){
+
+    const lowerCaseInput = searchInput.toLowerCase();
+    const savedTasks = document.querySelectorAll(".task");
+
+    savedTasks.forEach(task =>{
+
+        const texte = task.textContent.toLowerCase();
+        if(texte.includes(lowerCaseInput)){
+
+            task.style.display = "flex";
+
+        }else{
+
+            task.style.display = "none";
+        }
+    });
 }
 
 function getTasks(){
@@ -44,32 +99,44 @@ function createNewTask(){
     
     newTaskButton.addEventListener("click", () => {
         
+        const searchBar = document.querySelector(".search-form");
         newTask.classList.add("passive");
         formulaire.classList.add("active");
         tasksContainer.classList.add("passive");
+        searchBar.classList.add("passive");
     });
 }
 
 /* Fonction de vérification du "check" des tâches */
-function updateTasksStatus(){
+function tasksHandler(taskID){
 
-    const arrayTasks = JSON.parse(localStorage.getItem("tasks") ?? '[]');
+    const arrayTasks = getTasks();
+    const checkTasked = arrayTasks.find(task => task.ID === taskID);
     arrayTasks.forEach(task => {
-        
-        if(task.status == true){
 
-            const iconElement = task.getAttribute("checked");
-            if(iconElement.style.color === "green"){
+        if(taskID === task.ID){
 
-                iconElement.style.color = "red";
+            
+            task.status = !task.status;
+            localStorage.setItem("tasks", JSON.stringify(arrayTasks));
+            
+            const element = document.querySelector('[data-id="' + task.ID + '"]');
+            console.log(element);
+            const iconElement = element.querySelector("div .checked");
+            console.log(iconElement);
+            
+            if(task.status){
+                
+                iconElement.style.color = "green";
                 
             }else{
-
-                iconElement.style.color = "green";
+                
+                iconElement.style.color = "white";
             }
-            // Mettre bouton check correspondant en VERT!
+            
         }
     });
+
 }
 
 /* Récupération du patron de la balise template, et assignation des valeurs correspondantes */
@@ -132,26 +199,27 @@ function displayTasks(){
         taskElement.classList.add("task");
 
         taskElement.setAttribute("data-id", task.ID);
-
-        
-        //console.log(task.ID + "LE TEST");
         
         const deleteIcon = newBalise.querySelector(".delete");
-
         const parentDeleteIcon = deleteIcon.parentElement;
-
         const checkedIcon = newBalise.querySelector(".checked");
+        
+        if(task.status){
 
+            checkedIcon.style.color = "green";
+        
+        }else{
+
+            checkedIcon.style.color = "white";
+        }
+        
         console.log("Tableau de tâches début boucle forEach");
         console.log(tasksArray);
-
+        
         
         deleteIcon.addEventListener("click", ()=>{
             
             console.log("delete");
-
-
-            
             console.log("Tableau de tâches addEventListen click deleteIcon:");
             console.log(tasksArray);
             
@@ -171,32 +239,35 @@ function displayTasks(){
                 parentDeleteIcon.parentElement.remove();           
             }
         });
-
+        
         const AllTasks = getTasks();
         console.log("Tableau de tâches rechargée :");
         console.log(AllTasks);
         console.log("Tableau de tâches sortie de la boucle forEach");
         console.log(tasksArray);
-
-
+        
+        
         checkedIcon.addEventListener("click", ()=>{
             
-                   
-            newBalise.status = true;
+            const taskID = task.ID;
+            tasksHandler(taskID);
+            console.log("Tâche numéro :" + taskID);
+            // const element = document.querySelector('[data-id="' + task.ID + '"]');
+            // const iconElement = element.querySelector("div .checked");
 
-            updateTasksStatus(checkedIcon);
 
-            // if(checkedIcon.style.color === "green"){
-                
-            //     checkedIcon.style.color = "white";
-                
+            // if(iconElement.style.color === "green"){
+                    
+            //     iconElement.style.color = "white";
+            //     task.status = false;
+                    
             // }else{
 
-            //     checkedIcon.style.color = "green";
+            //     iconElement.style.color = "green";
+            //     task.status = true;
             // }
+
         });
-        
-        // updateTasksStatus();
 
         tasksContainer.appendChild(newBalise);
         
@@ -206,5 +277,6 @@ function displayTasks(){
 createNewTask();
 addNewTask();
 displayTasks();
+filterTasks();
 
 

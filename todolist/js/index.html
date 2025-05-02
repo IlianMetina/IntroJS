@@ -11,6 +11,12 @@
 </head>
 <body>
     
+    <header>
+        <div class="search-form">
+            <input type="search" class="search-bar" placeholder="Trouver une tâche" onkeyup="searchList(this.value)">
+        </div>
+    </header>
+
     <main>
 
         <div class="tasks-container"></div>
@@ -30,6 +36,7 @@
         <!-- Comment faire en sorte que la div s'append bien en premier juste après la div "navigation" -->
         <div class="navigation">
             <i class="material-icons" style="font-size:80px;color:white">add_box</i>
+            <button class="date-filter">Plus récent</button>
         </div>
         
     </main>
