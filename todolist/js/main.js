@@ -100,10 +100,12 @@ function createNewTask(){
     newTaskButton.addEventListener("click", () => {
         
         const searchBar = document.querySelector(".search-form");
+        const filterBtn = document.querySelector(".date-filter");
         newTask.classList.add("passive");
         formulaire.classList.add("active");
         tasksContainer.classList.add("passive");
         searchBar.classList.add("passive");
+        filterBtn.classList.add("passive");
     });
 }
 
@@ -156,10 +158,16 @@ function addNewTask(){
         newBalise.querySelector("p").textContent = titleInput.value;
         newBalise.querySelector("div").classList.add("task");
         
+        const searchBar = document.querySelector(".search-form");
+        const filterBtn = document.querySelector(".date-filter");
+
         /* Repasser en mode classique après l'ajout d'une tâche */
         newTask.classList.remove("passive");
         formulaire.classList.remove("active");
         tasksContainer.classList.remove("passive");
+        searchBar.classList.remove("passive");
+        filterBtn.classList.remove("passive");
+
 
         /* Ajout et actualisation des tâches dans le local storage */
         //localStorage.setItem("tasks", JSON.stringify(arrayTasks));

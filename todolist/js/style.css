@@ -3,7 +3,30 @@ html, body{
     height: 100vh;
     margin: 0;
     padding: 0;
-    overflow: h;
+}
+
+/* Finir le responsive pour la version PC : Largeur de la barre de recherche,
+   largeur des tâches, largeur des input pour le titre et la description du formulaire
+
+*/
+@media screen and (min-width: 600px) {
+    
+    .search-form{
+
+        width: 23%;
+    }
+
+    .search-bar {
+        width: 60%;
+        padding: 5px 8px;
+        text-align: center;
+        font-size: 1em;
+        border: 2px solid #ccc;
+        border-radius: 25px;
+        outline: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
 }
 
 body{
@@ -86,6 +109,16 @@ button{
     justify-content: center;
 }
 
+.search-form.passive{
+
+    visibility: hidden;
+}
+
+.date-filter.passive{
+
+    visibility: hidden;
+}
+
 .search-bar{
 
     margin-top: 10px;
@@ -98,6 +131,7 @@ button{
     outline: none;
     transition: all 0.3s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
 }
 
 .search-bar.passive{
